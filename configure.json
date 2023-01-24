@@ -1,0 +1,7 @@
+{
+    "host":"127.0.0.1",
+    "port":999,
+    "template_folder":"static",
+    "static_folder":"static",
+    "error":"log/error.log"
+}

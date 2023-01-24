@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+
+		<title>目录列表 {{path}}</title>
+	</head>
+	<body>
+		<h1>目录列表 {{path}}</h1>
+		<hr>
+		<p>文件夹</p>
+		<hr>
+		<ul>
+			{% for folder in folder -%}
+			<li>
+				<a href="{{url}}{{path}}/{{folder}}">
+					{{folder}}
+				</a>
+			</li>
+			{% endfor -%}
+		</ul>
+		<p>文件</p>
+		<hr>
+		<ul>
+			{% for file in file -%}
+			<li>
+				<a href="{{url}}{{path}}/{{file}}">
+					{{file}}
+				</a>
+			</li>
+			{% endfor -%}
+		</ul>
+		<hr>
+		<p>
+			<input type="file" id="file" />
+			<button id="upload">上传</button>
+		</p>
+		<script src="/static/jquery.js"></script>
+		<script>
+			$("#upload").click(function () {
+			   var files = $('#file').prop('files');
+			   var data = new FormData();
+			   data.append('file', files[0]);
+            data.append('path', '{{path}}');
+			   $.ajax({
+			                type: 'POST',
+			                url: "/upload",
+			                data: data,
+			                cache: false,
+			                processData: false,
+			                contentType: false,
+			                success: function (ret) {
+			                    if (ret == 'True'){
+			                     location.reload();
+			                    }else{
+			                     alert('上传失败');
+			                    };
+			                }
+			            });
+			        });
+		</script>
+	</body>
+</html>
